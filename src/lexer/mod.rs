@@ -1,10 +1,15 @@
 mod token_matcher;
 
 use std::cmp::min;
-use std::io::{BufRead, Read};
+use std::io::{BufRead, Read, BufReader};
 use std::str::SplitWhitespace;
 use crate::lexical_structure::{Lexeme, Token};
 use token_matcher::match_token;
+
+lexer! {
+    fn next_token(text) -> Lexeme;
+
+}
 
 pub trait Lexer {
     // fn lex(&mut self, reader: impl std::io::Read);
@@ -13,19 +18,24 @@ pub trait Lexer {
     fn lex(&mut self) -> Vec<Lexeme>;
 }
 
-pub struct CoolLexer {
-    content: String,
-    current_pos: usize,
+pub struct CoolLexer<T> {
+    reader: BufReader<T>,
+    current_line: String,
+    current_line_num: usize,
+    current_pos_in_line: usize,
     lexemes: Vec<Lexeme>,
 }
 
-impl CoolLexer {
+impl<T> CoolLexer<T> {
     pub fn new(mut reader: impl Read) -> Self {
         let mut content = String::new();
+        reader.lines()
         reader.read_to_string(&mut content);
+
         CoolLexer {
             content,
-            current_pos: 0,
+            current_line: 0,
+            current_pos_in_line: 0,
             lexemes: Vec::new(),
         }
     }
