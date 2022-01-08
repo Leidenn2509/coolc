@@ -1,5 +1,4 @@
-use cool_lexer::lex;
-use cool_lexer::Lexeme;
+use cool_lexer::{Lexeme, lex};
 
 fn main() {
     let source = "class Main {
