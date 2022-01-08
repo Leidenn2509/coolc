@@ -103,6 +103,15 @@ impl Debug for Lexeme {
     }
 }
 
-// pub fn lex(source: String) -> Vec<Lexeme> {
-//
-// }
+pub fn lex(source: &str) -> Vec<Lexeme> {
+    let mut lex = Token::lexer(source);
+    let mut lexemes: Vec<Lexeme> = vec![];
+    while let Some(token) = lex.next() {
+        let span = lex.span();
+        let slice = lex.slice();
+        let n = source[..span.start].matches("\n").count() + 1;
+        lexemes.push(Lexeme(n, token, String::from(slice)))
+    }
+
+    lexemes
+}
