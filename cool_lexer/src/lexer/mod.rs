@@ -1,3 +1,4 @@
+use std::fmt::{Debug, Formatter};
 use logos::Logos;
 
 #[derive(Logos, Debug, Clone)]
@@ -54,7 +55,7 @@ pub enum Token {
     Not,
     //
     // BoolConst,
-    #[regex(r"^[A-Z][a-zA-Z0-9_]*")]
+    #[regex("[A-Z][a-zA-Z0-9_]*")]
     TypeID,
     // ObjectID,
     // IntConst,
@@ -68,8 +69,12 @@ pub enum Token {
 
     #[token("}")]
     CloseCurlyBrace,
-    // Colon,
-    // Semicolon,
+
+    #[token(":")]
+    Colon,
+
+    #[token(";")]
+    Semicolon,
     // Dot,
     // Comma,
     // Assign,
@@ -84,7 +89,9 @@ pub enum Token {
     // AtSign,
     // Tilde,
     //
-    // Error
+    #[error]
+    #[regex(r"[ \t\n\f]+", logos::skip)]
+    Error
 }
 
 #[derive(Clone)]
@@ -96,6 +103,6 @@ impl Debug for Lexeme {
     }
 }
 
-pub fn lex(source: String) -> Vec<Lexeme> {
-
-}
+// pub fn lex(source: String) -> Vec<Lexeme> {
+//
+// }
