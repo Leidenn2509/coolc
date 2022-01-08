@@ -5,7 +5,7 @@ use std::env;
 use std::fs;
 use std::io::{BufRead, BufReader};
 
-use coolc::lexer::{CoolLexer, Lexer};
+// use coolc::lexer::{CoolLexer, Lexer};
 
 fn main() {
     let args: env::Args = env::args();
@@ -30,26 +30,26 @@ fn lex(file_name: &String) -> Vec<String> {
 
     let mut reader = BufReader::new(file);
 
-    let mut lexer = CoolLexer::new(reader);
-    let lexemes = lexer.lex();
-    println!("lexemes: {:?}", lexemes);
-    todo!();
-
-    let mut line = String::new();
+    // let mut lexer = CoolLexer::new(reader);
+    // let lexemes = lexer.lex();
+    // println!("lexemes: {:?}", lexemes);
+    // todo!();
+    //
+    // let mut line = String::new();
     let mut res: Vec<String> = Vec::new();
-    loop {
-        match reader.read_line(&mut line) {
-            Ok(length) if length == 0 => {
-                break;
-            }
-            Ok(_) => {
-                res.push(line.clone());
-                line.clear();
-            }
-            Err(_) => {
-                panic!("Cant read from file");
-            }
-        }
-    }
+    // loop {
+    //     match reader.read_line(&mut line) {
+    //         Ok(length) if length == 0 => {
+    //             break;
+    //         }
+    //         Ok(_) => {
+    //             res.push(line.clone());
+    //             line.clear();
+    //         }
+    //         Err(_) => {
+    //             panic!("Cant read from file");
+    //         }
+    //     }
+    // }
     res
 }
