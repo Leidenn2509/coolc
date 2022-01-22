@@ -1,7 +1,9 @@
 use std::fmt::{Debug, Formatter};
 use logos::Logos;
+use serde::{Serialize, Deserialize};
 
-#[derive(Logos, Debug, Clone)]
+
+#[derive(Logos, Serialize, Deserialize, Debug, Clone)]
 pub enum Token {
     #[token("class")]
     Class,
@@ -94,7 +96,7 @@ pub enum Token {
     Error
 }
 
-#[derive(Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Lexeme(pub usize, pub Token, pub String);
 
 impl Debug for Lexeme {
@@ -112,6 +114,8 @@ pub fn lex(source: &str) -> Vec<Lexeme> {
         let n = source[..span.start].matches("\n").count() + 1;
         lexemes.push(Lexeme(n, token, String::from(slice)))
     }
+
+    println!("{}", Token::Class.serialize());
 
     lexemes
 }
